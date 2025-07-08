@@ -68,7 +68,9 @@ def click_by_title(target_title):
         pyautogui.moveTo(center_x, center_y)
         pyautogui.click()
         print(f"✅ Clicked on: {target_title} (score: {best_score})")
+        speak("clicking")
     else:
+        speak("not found")
         print("❌ No matching video title found.")
 # Execution Functions
 def execute_yt():
@@ -116,7 +118,7 @@ def execute_yt():
     elif "stop" in command or "bye" in command or "youtube" in command:
         speak("Exiting Youtube Command!")
         return "exit"
-    elif "play" in command or "pause" in command:
+    elif "play" in command or "pause" in command or "poz" in command:
         pyautogui.hotkey('space')
     elif "mute" in command or "sound" in command:
         pyautogui.hotkey('m')
@@ -147,15 +149,10 @@ def execute_google():
                 
             else:
                 speak("Okay, not pressing search.")
-    elif "screenshot" in command or "click" in command:
-        speak("Taking Screenshot")
-        screenshot = pyautogui.screenshot()
-        screenshot.save("screenshot.png")
-        speak("Screenshot taken and saved!")
     elif "scroll down" in command:
         pyautogui.scroll(-1000)
         speak("Scrolling down")
-    elif "scroll up" in command:
+    elif "scroll up" in command or "up" in command :
         pyautogui.scroll(1000)
         speak("Scrolling up")
     elif "go back" in command:
@@ -217,6 +214,7 @@ sleeping = False  # Global sleep flag
 if __name__ == "__main__":
     speak("Voice assistant ready. Say a command.")
     while True:
+        speak("What can i do for you?")
         cmd = listen()
 
         if not cmd:
