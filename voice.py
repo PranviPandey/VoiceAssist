@@ -78,19 +78,19 @@ def execute_yt():
     command = listen()
     time.sleep(0.5)
     if "search" in command or "find" in command:
-        # Move and click on input field (change coordinates to match your browser)
+       
             speak("Clicking the search bar. ")
-            pyautogui.moveTo(612, 138)  # 👈 Update this to your actual search bar location
+            pyautogui.moveTo(612, 138)  
             pyautogui.click(clicks=3, interval=0.1)
             voice_to_type()
             time.sleep(1)
-            #Confirm if user wants to search
+            #Confirming if user wants to search
             speak("Do you want me to press the search button?")
             confirmation = listen()
             if "yes" in confirmation or "OK" in confirmation:
                 speak("Pressing search.")
                 time.sleep(1)
-                pyautogui.moveTo(1250, 144)  # 👈 Update this to your actual search button location
+                pyautogui.moveTo(1250, 144) 
                 pyautogui.click()
                 
             else:
