@@ -11,14 +11,14 @@ from PyPDF2 import PdfReader
 import docx
 
 reader = easyocr.Reader(['en'], gpu=False)
-# Initialize text-to-speech engine
 
+# Initialize text-to-speech engine
 engine = pyttsx3.init()
 
 
 def speak_text(text):
     print("Assistant:", text)
-    engine.say(text)        # ✅ Full paragraph/sentence here
+    engine.say(text)        
     engine.runAndWait()
 
 def read_text_file(path):
@@ -95,6 +95,7 @@ def voice_to_type():
         speak("Typing now.")
         time.sleep(2)
         pyautogui.typewrite(text)
+
 def click_by_title(target_title):
     # Screenshot the screen
     screenshot = pyautogui.screenshot()
@@ -111,7 +112,6 @@ def click_by_title(target_title):
         if score > best_score:
             best_score = score
             best_result = bbox
-
     # If a good match is found
     if best_result and best_score > 70:
         # bbox is a list of 4 points
@@ -125,6 +125,7 @@ def click_by_title(target_title):
     else:
         speak("not found")
         print("❌ No matching video title found.")
+
 # Execution Functions
 # def execute_calender():
 #     pyautogui.hotkey('c')
@@ -149,6 +150,32 @@ def click_by_title(target_title):
 #     speak("saving the reminder in google calender")
 #     pyautogui.hotkey('ctrl','s')
 
+def execute_reminder():
+    speak("Do you want to create task?")
+    command= listen()
+    time.sleep(0.5)
+    pyautogui.moveTo(119,240)
+    pyautogui.click()
+    c= listen()
+    if "yes" in c or "ok" in c:
+        pyautogui.moveTo(116,344)
+        pyautogui.click()
+        speak("creating a task") 
+        speak("Add title")
+        c2= listen()
+        voice_to_type()
+        speak("Adding a task")
+        speak("want to add description?")
+        C3= listen()
+        if "yes" in C3 or "ok" in C3:
+            pyautogui.hotkey('tab')
+            pyautogui.hotkey('tab')
+            speak("adding description")
+            voice_to_type()
+        pyautogui.hotkey('ctrl','enter')
+    elif "stop" in command or "bye" in command or "google" in command or "calender" in command:
+        speak("Exiting google calender Command!")
+        return "exit"
 
     
 def whatsapp_execute():
@@ -159,7 +186,7 @@ def whatsapp_execute():
         if not contact_selected:
             name = ""
             while not name:
-                pyautogui.moveTo(206, 195)  # 👈 Adjust if needed
+                pyautogui.moveTo(206, 195)  
                 pyautogui.click(clicks=3, interval=0.1)
                 speak("Listening for contact name...")
                 name = listen()
@@ -168,11 +195,9 @@ def whatsapp_execute():
             
                 pyautogui.typewrite(name)
                 time.sleep(2)
-                pyautogui.press('enter')  # Open chat
+                pyautogui.press('enter')  
                 contact_selected = True
                 speak(f"Selected contact {name}.")
-
-        # Now stay on the same contact unless user says "change contact"
         speak("What can I do for you?")
         command = listen()
 
@@ -268,8 +293,6 @@ def whatsapp_execute():
             speak("Exiting WhatsApp Command!")
             return "exit"
 
-
-
 def execute_yt():
     speak("Do you have any command?")
     command = listen()
@@ -324,25 +347,7 @@ def execute_yt():
     elif "back" in command :
         pyautogui.hotkey('left')
 
-def execute_reminder():
-    speak("Do you want to create task?")
-    command= listen()
-    time.sleep(0.5)
-    pyautogui.moveTo(119,240)
-    pyautogui.click()
-    c= listen()
-    if "yes" in c or "ok" in c:
-        pyautogui.moveTo(116,344)
-        pyautogui.click()
-        speak("creating a task") 
-        speak("Add title")
-        c2= listen()
-        voice_to_type()
-        speak("Adding a task")
-        pyautogui.hotkey('ctrl','enter')
-    elif "stop" in command or "bye" in command or "google" in command:
-        speak("Exiting google Command!")
-        return "exit" 
+ 
 
 def execute_google():
     speak("Do you have any command ,you can say yes if you want to search again?")
@@ -449,7 +454,7 @@ def execute(command):
         speak("Sorry, I don't recognize that command.")
 
 # Main loop with sleep/wake feature
-sleeping = False  # Global sleep flag
+sleeping = False  
 
 if __name__ == "__main__":
     speak("Voice assistant ready. Say a command.")
@@ -465,7 +470,7 @@ if __name__ == "__main__":
                 sleeping = False
                 speak("I'm awake again!")
             else:
-                continue  # Ignore everything else while sleeping
+                continue  
         else:
             if "sleep" in cmd or "wait" in cmd:
                 sleeping = True
